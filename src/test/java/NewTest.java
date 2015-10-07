@@ -5,8 +5,10 @@ import org.testng.annotations.BeforeTest;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.MessageFormat;
 import java.util.concurrent.TimeUnit;
+
+import io.appium.java_client.ios.*;
+import io.appium.java_client.remote.MobileCapabilityType;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -21,36 +23,42 @@ public class NewTest {
   private static WebDriver driver = null;
   @Test
   public void appiumExampleTest() throws Exception {
-	    //Check if label is on screen
+	    //Check if label with text My Label is visible on the screen 
 		driver.findElement(By.name("My Label"));
 			
-	  	// find button with label Button
+	  	//Find the button with text Button and press it
 		WebElement button=driver.findElement(By.name("Button"));
-		// click on button and change the label text to something
+		//In the app im testing this should change the label text to "something"
 		button.click();
 		
-		// find button with label or content-description New Button
+		//See if the text has changed 
 		driver.findElement(By.name("something"));
 	}
   
 @BeforeTest
 public void setUp() throws Exception {
     DesiredCapabilities capabilities = new DesiredCapabilities();
-    capabilities.setCapability(CapabilityType.BROWSER_NAME, "iOS 6.0");
-    capabilities.setCapability("device", "iPhone Simulator");
-    capabilities.setCapability(CapabilityType.PLATFORM, "Mac 10.8");
+    capabilities.setCapability("platformName", "iOS");
+    capabilities.setCapability(MobileCapabilityType.VERSION, "7.0");
+    //capabilities.setCapability(MobileCapabilityType.LAUNCH_TIMEOUT, "false");
+    //capabilities.setCapability(MobileCapabilityType.DEVICE_READY_TIMEOUT, "0");
+    capabilities.setCapability("platformVersion", "9.0");
+    capabilities.setCapability("deviceName", "iPhone 4s");
+    capabilities.setCapability("browserName", "");
+    //Absolute path to the app file of the app to be tested 
+    capabilities.setCapability("app", "//Users//Shared//Jenkins//Downloads//iOSapp//SampleiOsAppToBuildOnJenkinsMacSlave//build//Release-iphoneos//JenkinsTestBuild.app");
+    
+    try {
+		driver = new RemoteWebDriver(new URL("http://127.0.0.1:4473/wd/hub"), capabilities);
+	} catch (MalformedURLException e) {
+		e.printStackTrace();
+	}
 
-    //zip file containing your app to be tested
-    capabilities.setCapability("app", "http://appium.s3.amazonaws.com/TestApp6.0.app.zip");
-    
-    
+	driver.manage().timeouts().implicitlyWait(380, TimeUnit.SECONDS);
 }
-
-
 
 @AfterTest
   public static void tearDown(){
 		driver.quit();
 	}
-
 }
