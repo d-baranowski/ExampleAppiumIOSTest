@@ -38,7 +38,7 @@ public void setUp() throws Exception {
     capabilities.setCapability("app", "/Users/Shared/Jenkins/Desktop/JenkinsTestBuild.app");
     
     try {
-		driver = new RemoteWebDriver(new URL("http://127.0.0.1:4475/wd/hub"), capabilities);
+		driver = new RemoteWebDriver(new URL("http://bjsss-mac-mini:4475/wd/hub"), capabilities);
 	} catch (MalformedURLException e) {
 		e.printStackTrace();
 	}
