@@ -24,41 +24,28 @@ public class NewTest {
   @Test
   public void appiumExampleTest() throws Exception {
 	    //Check if label with text My Label is visible on the screen 
-		driver.findElement(By.name("My Label"));
-			
-	  	//Find the button with text Button and press it
-		WebElement button=driver.findElement(By.name("Button"));
-		//In the app im testing this should change the label text to "something"
-		button.click();
-		
-		//See if the text has changed 
-		driver.findElement(By.name("something"));
+		driver.findElement(By.name("Hello World of Appium and Calabash"));		
+		Thread.sleep(5000);
 	}
   
 @BeforeTest
 public void setUp() throws Exception {
     DesiredCapabilities capabilities = new DesiredCapabilities();
     capabilities.setCapability("platformName", "iOS");
-    capabilities.setCapability(MobileCapabilityType.VERSION, "7.0");
-    //capabilities.setCapability(MobileCapabilityType.LAUNCH_TIMEOUT, "false");
-    //capabilities.setCapability(MobileCapabilityType.DEVICE_READY_TIMEOUT, "0");
-    capabilities.setCapability("platformVersion", "9.0");
+    capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "60");
+    capabilities.setCapability("platformVersion", "9.0.2");
     capabilities.setCapability("deviceName", "iPhone 4s");
-    capabilities.setCapability("browserName", "");
-    //Absolute path to the app file of the app to be tested 
-    capabilities.setCapability("app", "//Users//Shared//Jenkins//Downloads//iOSapp//SampleiOsAppToBuildOnJenkinsMacSlave//build//Release-iphoneos//JenkinsTestBuild.app");
+    capabilities.setCapability("app", "/Users/Shared/Jenkins/Desktop/JenkinsTestBuild.app");
     
     try {
-		driver = new RemoteWebDriver(new URL("http://127.0.0.1:4473/wd/hub"), capabilities);
+		driver = new RemoteWebDriver(new URL("http://127.0.0.1:4475/wd/hub"), capabilities);
 	} catch (MalformedURLException e) {
 		e.printStackTrace();
 	}
-
-	driver.manage().timeouts().implicitlyWait(380, TimeUnit.SECONDS);
 }
 
 @AfterTest
   public static void tearDown(){
 		driver.quit();
-	}
+	}	
 }
